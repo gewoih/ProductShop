@@ -15,6 +15,7 @@ namespace ProductShopAPI.Controllers
         }
 
         [Route("getProducts")]
+        [HttpGet]
         public List<Product> GetProducts()
         {
             return productsDbContext.Products.ToList();
