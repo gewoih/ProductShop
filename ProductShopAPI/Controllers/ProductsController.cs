@@ -5,6 +5,7 @@ using ProductShopLibrary;
 namespace ProductShopAPI.Controllers
 {
     [Controller]
+    [Route("api/[controller]")]
     public class ProductsController : Controller
     {
         private readonly ProductsDbContext productsDbContext;
