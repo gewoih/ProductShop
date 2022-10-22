@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductShop", "ProductShop\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductShopLibrary", "ProductShopLibrary\ProductShopLibrary.csproj", "{48DD998E-BC25-4B17-B1BA-4F149FDCE84C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductShopAPI", "ProductShopAPI\ProductShopAPI.csproj", "{704CE86E-3419-4AB9-8D34-6997401CC3B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductShopAPI", "ProductShopAPI\ProductShopAPI.csproj", "{704CE86E-3419-4AB9-8D34-6997401CC3B7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
