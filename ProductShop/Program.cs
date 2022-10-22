@@ -1,17 +1,16 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.EntityFrameworkCore;
+using ProductShop.Services;
 using ProductShopAPI.DAL;
 
 var builder = WebApplication.CreateBuilder(args);
 
-string mySqlConnectionString = builder.Configuration.GetConnectionString("MYSQL");
-builder.Services.AddDbContext<ProductsDbContext>(options => options.UseMySql(mySqlConnectionString, ServerVersion.AutoDetect(mySqlConnectionString)));
-
 // Add services to the container.
 builder.Services.AddRazorPages();
-
 builder.Services.AddServerSideBlazor();
+
+builder.Services.AddTransient<ProductsService>();
 
 var app = builder.Build();
 
