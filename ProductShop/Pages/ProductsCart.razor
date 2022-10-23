@@ -1,0 +1,57 @@
+﻿@page "/cart"
+
+@using ProductShop.Services
+@using ProductShopLibrary.Products
+
+@inject LocalStorage localStorage
+
+<h3>Ваша корзина</h3>
+
+<table class="table">
+	<thead class="table-dark">
+		<tr>
+			<th>Наименование</th>
+			<th>Изображение</th>
+			<th>Цена</th>
+			<th>Кол-во</th>
+			<th>Сумма</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (productsCart != null)
+		{
+			foreach (CartProduct cartProduct in productsCart.Products)
+			{
+				<tr>
+					<td>@cartProduct.Product.Name</td>
+					<td><img src="data:image;base64,@System.Convert.ToBase64String(cartProduct.Product.Image)" width="150" height="150"/></td>
+					<td>@Math.Round(cartProduct.Product.Price, 2)</td>
+					<td>@cartProduct.Quantity</td>
+					<td>@Math.Round(cartProduct.TotalAmount, 2)</td>
+				</tr>
+			}
+		}
+	</tbody>
+</table>
+
+
+
+@code {
+	private Cart productsCart;
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await base.OnAfterRenderAsync(firstRender);
+
+		if (firstRender)
+		{
+			productsCart = await localStorage.GetAsync<Cart>("cart");
+			StateHasChanged();
+		}
+    }
+}
