@@ -7,20 +7,20 @@
 
 <h3>Ваша корзина</h3>
 
-<table class="table">
-	<thead class="table-dark">
-		<tr>
-			<th>Наименование</th>
-			<th>Изображение</th>
-			<th>Цена</th>
-			<th>Кол-во</th>
-			<th>Сумма</th>
-		</tr>
-	</thead>
-	<tbody>
-		@if (productsCart != null)
-		{
-			foreach (CartProduct cartProduct in productsCart.Products)
+@if (productsCart != null)
+{
+	<table class="table">
+		<thead class="table-dark">
+			<tr>
+				<th>Наименование</th>
+				<th>Изображение</th>
+				<th>Цена</th>
+				<th>Кол-во</th>
+				<th>Сумма</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach (CartProduct cartProduct in productsCart.Products)
 			{
 				<tr>
 					<td>@cartProduct.Product.Name</td>
@@ -30,9 +30,16 @@
 					<td>@Math.Round(cartProduct.TotalAmount, 2)</td>
 				</tr>
 			}
-		}
-	</tbody>
-</table>
+
+			<p>Итого: @Math.Round(productsCart.TotalAmount, 2)р.</p>
+			<button type="button" class="btn btn-primary">Оформить заказ</button>
+		</tbody>
+	</table>
+}
+else
+{
+	<h2>Вы пока не добавили товары в вашу корзину. Чтобы изучить наш ассортимент, перейдите в <a href="/products">каталог</a></h2>
+}
 
 
 
