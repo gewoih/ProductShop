@@ -8,8 +8,8 @@
 
 <h3>Список товаров</h3>
 
-<table border="1">
-	<thead>
+<table class="table">
+	<thead class="table-dark">
 		<tr>
 			<th>Наименование</th>
 			<th>Категория</th>
@@ -25,7 +25,8 @@
 				<td>@product.Category</td>
 				<td>@Math.Round(product.Price, 2)</td>
 				<td><img src="data:image;base64,@System.Convert.ToBase64String(product.Image)" width="300" height="300"/></td>
-				<td><button @onclick="async () => await AddProductToCart(product)">В корзину</button></td>
+				<td><button type="button" class="btn btn-primary" disabled="@(product.QuantityInStock <= 0)" 
+					@onclick="async () => await AddProductToCart(product)">В корзину</button></td>
 			</tr>
 		}
 	</tbody>
@@ -44,9 +45,10 @@
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		base.OnAfterRender(firstRender);
+		await base.OnAfterRenderAsync(firstRender);
 
-		productsCart = await localStorage.GetAsync<Cart>("cart");
+		if (firstRender)
+			productsCart = await localStorage.GetAsync<Cart>("cart");
 	}
 
 	public async Task AddProductToCart(Product product)
