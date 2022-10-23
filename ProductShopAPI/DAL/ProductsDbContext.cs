@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProductShopLibrary;
+using ProductShopLibrary.Products;
 
 namespace ProductShopAPI.DAL
 {

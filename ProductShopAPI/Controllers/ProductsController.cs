@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProductShopAPI.DAL;
-using ProductShopLibrary;
+using ProductShopLibrary.Products;
 
 namespace ProductShopAPI.Controllers
 {

@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using ProductShopLibrary;
+using ProductShopLibrary.Products;
 
 namespace ProductShop.Services
 {
