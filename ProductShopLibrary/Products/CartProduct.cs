@@ -2,13 +2,13 @@
 {
     public class CartProduct
     {
+        public Guid Id { get; set; }
         public Product Product { get; set; }
         public int Quantity { get; set; }
         public decimal TotalAmount => Product.Price * Quantity;
 
-        public CartProduct(Product product)
+        public CartProduct()
         {
-            Product = product;
             Quantity = 1;
         }
 

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace ProductShopLibrary.Products
+﻿namespace ProductShopLibrary.Products
 {
     public class Cart
     {
+        public Guid Id { get; set; }
         public List<CartProduct> Products { get; set; }
         public decimal TotalAmount => Products.Sum(p => p.TotalAmount);
 
@@ -21,7 +16,7 @@ namespace ProductShopLibrary.Products
             CartProduct productInCart = Products.FirstOrDefault(p => p.Product.Id == product.Id);
 
             if (productInCart == null)
-                Products.Add(new CartProduct(product));
+                Products.Add(new CartProduct() { Product = product });
             else
                 productInCart.AddUnit();
         }
