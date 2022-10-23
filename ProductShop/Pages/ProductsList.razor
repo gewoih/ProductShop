@@ -1,43 +1,47 @@
 ﻿@page "/products"
 
 @inject ProductsService productsService
+@inject LocalStorage localStorage
 
 @using ProductShop.Services
-@using ProductShopLibrary
+@using ProductShopLibrary.Products
 
 <h3>Список товаров</h3>
 
 <table border="1">
-    <thead>
-        <tr>
-            <th>Наименование</th>
-            <th>Категория</th>
-            <th>Цена</th>
-            <th>Изображение</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (Product product in products)
-        {
-            <tr>
-                <td>@product.Name</td>
-                <td>@product.Category</td>
-                <td>@Math.Round(product.Price, 2)</td>
-                <td><img src="data:image;base64,@System.Convert.ToBase64String(product.Image)" width="300" height="300"/></td>
-                <td><button disabled="@(product.QuantityInStock <= 0)">В корзину</button></td>
-            </tr>
-        }
-    </tbody>
+	<thead>
+		<tr>
+			<th>Наименование</th>
+			<th>Категория</th>
+			<th>Цена</th>
+			<th>Изображение</th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (Product product in products)
+		{
+			<tr>
+				<td>@product.Name</td>
+				<td>@product.Category</td>
+				<td>@Math.Round(product.Price, 2)</td>
+				<td><img src="data:image;base64,@System.Convert.ToBase64String(product.Image)" width="300" height="300"/></td>
+				<td><button disabled="@(product.QuantityInStock <= 0)" @onclick="async () => await AddProductToCart(product)">В корзину</button></td>
+			</tr>
+		}
+	</tbody>
 </table>
 
 @code {
-    private List<Product> products;
+	private List<Product> products;
 
-    protected override void OnInitialized()
-    {
-        productsService = new ProductsService();
-        products = productsService.GetAllProducts();
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
 
-        base.OnInitialized();
-    }
+		products = productsService.GetAllProducts();
+	}
+
+	public async Task AddProductToCart(Product product)
+	{
+	}
 }
