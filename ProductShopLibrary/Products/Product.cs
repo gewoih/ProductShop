@@ -1,4 +1,4 @@
-﻿namespace ProductShopLibrary
+﻿namespace ProductShopLibrary.Products
 {
     public class Product
     {
