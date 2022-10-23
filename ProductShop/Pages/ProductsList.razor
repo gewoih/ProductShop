@@ -25,7 +25,7 @@
 				<td>@product.Category</td>
 				<td>@Math.Round(product.Price, 2)</td>
 				<td><img src="data:image;base64,@System.Convert.ToBase64String(product.Image)" width="300" height="300"/></td>
-				<td><button disabled="@(product.QuantityInStock <= 0)" @onclick="async () => await AddProductToCart(product)">В корзину</button></td>
+				<td><button @onclick="async () => await AddProductToCart(product)">В корзину</button></td>
 			</tr>
 		}
 	</tbody>
@@ -33,6 +33,7 @@
 
 @code {
 	private List<Product> products;
+	private Cart productsCart;
 
 	protected override void OnInitialized()
 	{
@@ -41,7 +42,20 @@
 		products = productsService.GetAllProducts();
 	}
 
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		base.OnAfterRender(firstRender);
+
+		productsCart = await localStorage.GetAsync<Cart>("cart");
+	}
+
 	public async Task AddProductToCart(Product product)
 	{
+		if (productsCart == null)
+			productsCart = new Cart();
+
+		productsCart.AddProduct(product);
+
+		await localStorage.SetAsync<Cart>("cart", productsCart);
 	}
 }

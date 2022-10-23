@@ -15,5 +15,15 @@ namespace ProductShopLibrary.Products
         {
             Products = new List<CartProduct>();
         }
+
+        public void AddProduct(Product product)
+        {
+            CartProduct productInCart = Products.FirstOrDefault(p => p.Product.Id == product.Id);
+
+            if (productInCart == null)
+                Products.Add(new CartProduct(product));
+            else
+                productInCart.AddUnit();
+        }
     }
 }
