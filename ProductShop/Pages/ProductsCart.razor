@@ -2,8 +2,10 @@
 
 @using ProductShop.Services
 @using ProductShopLibrary.Products
+@using ProductShopLibrary.Purchases
 
 @inject LocalStorage localStorage
+@inject PurchasesService purchasesService
 
 <h3>Ваша корзина</h3>
 
@@ -30,25 +32,58 @@
 					<td>@Math.Round(cartProduct.TotalAmount, 2)</td>
 				</tr>
 			}
-
-			<p>Итого: @Math.Round(productsCart.TotalAmount, 2)р.</p>
-			<button type="button" class="btn btn-primary">Оформить заказ</button>
 		</tbody>
 	</table>
+
+	<p>Итого: @Math.Round(productsCart.TotalAmount, 2)р.</p>
+
+	<h2>Форма заказа</h2>
+	<EditForm Model="@customerInfo" OnSubmit="OnPurchaseSubmitted">
+		<label>Имя</label>
+		<div>
+			<InputText @bind-Value="customerInfo.Name"/>
+		</div>
+
+		<label>Фамилия</label>
+		<div>
+			<InputText @bind-Value="customerInfo.Surname"/>
+		</div>
+
+		<label>Телефон</label>
+		<div>
+			<InputText @bind-Value="customerInfo.PhoneNumber"/>
+		</div>
+
+		<label>Email</label>
+		<div>
+			<InputText @bind-Value="customerInfo.Email"/>
+		</div>
+
+		<label>Адрес доставки</label>
+		<div>
+			<InputText @bind-Value="customerInfo.Address"/>
+		</div>
+
+		<button type="submit" class="btn btn-primary">Оформить заказ</button>
+
+	</EditForm>
 }
 else
 {
 	<h2>Вы пока не добавили товары в вашу корзину. Чтобы изучить наш ассортимент, перейдите в <a href="/products">каталог</a></h2>
 }
 
-
-
 @code {
 	private Cart productsCart;
+	private Purchase purchase;
+	private CustomerInfo customerInfo;
 
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
+
+		purchase = new Purchase();
+		customerInfo = new CustomerInfo();
 	}
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -60,5 +95,16 @@ else
 			productsCart = await localStorage.GetAsync<Cart>("cart");
 			StateHasChanged();
 		}
-    }
+	}
+
+	private async Task OnPurchaseSubmitted()
+	{
+		purchase = new Purchase()
+			{
+				CustomerInfo = customerInfo,
+				ProductCart = productsCart
+			};
+
+		await purchasesService.TrySubmitPurchase(purchase);
+	}
 }
