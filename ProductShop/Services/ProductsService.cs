@@ -11,7 +11,7 @@ namespace ProductShop.Services
             {
                 List<Product> products;
                 
-                string response = client.GetStringAsync("https://localhost:7019/api/Products/getProducts").Result;
+                string response = client.GetStringAsync("https://localhost:7019/api/Products/get_products").Result;
                 products = JsonConvert.DeserializeObject<List<Product>>(response);
 
                 return products;
