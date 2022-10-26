@@ -1,11 +1,4 @@
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.JSInterop;
 using ProductShop.Services;
-using ProductShopAPI.DAL;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +7,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor()
     .AddHubOptions(o => o.MaximumReceiveMessageSize = 1024 * 1024 * 32);
 
-builder.Services.AddTransient<ProductsService>();
+builder.Services.AddScoped<ProductsService>();
+builder.Services.AddScoped<PurchasesService>();
 builder.Services.AddScoped<LocalStorage>();
 
 var app = builder.Build();
