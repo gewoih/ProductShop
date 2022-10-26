@@ -15,7 +15,7 @@ namespace ProductShopAPI.Controllers
             this.productsDbContext = productsDbContext;
         }
 
-        [Route("getProducts")]
+        [Route("get_products")]
         [HttpGet]
         public List<Product> GetProducts()
         {
