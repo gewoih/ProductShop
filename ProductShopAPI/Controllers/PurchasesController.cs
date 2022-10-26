@@ -23,10 +23,7 @@ namespace ProductShopAPI.Controllers
         {
             if (await ValidateProductsStock(purchase.ProductCart.Products))
             {
-                foreach (var x in purchase.ProductCart.Products)
-                {
-                    productsDbContext.Attach(x.Product);
-                }
+                productsDbContext.AttachRange(purchase.ProductCart.Products);
 
                 await productsDbContext.Purchases.AddAsync(purchase);
                 await productsDbContext.SaveChangesAsync();
