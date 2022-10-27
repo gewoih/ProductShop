@@ -1,0 +1,39 @@
+﻿@using ProductShopLibrary.Products
+@using SupplierControlPanel.Services
+
+@inject WarehouseService warehouseService
+@model List<Product>
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Наименование</th>
+			<th>Остаток</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (Model is not null && Model.Any())
+		{
+			foreach (Product product in Model)
+			{
+				<tr>
+					<td>@product.Name</td>
+					<td>@product.QuantityInStock</td>
+				</tr>
+			}
+		}
+		else
+		{
+			<h2>Склад полон!</h2>
+		}
+	</tbody>
+</table>
+
+@{
+	warehouseService.OnEndingProductsUpdated += OnWarehouseChanged;
+
+	void OnWarehouseChanged()
+	{
+		Model = warehouseService.EndingProducts;
+	}
+}

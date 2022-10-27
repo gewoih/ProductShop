@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductShopLibrary", "Produ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductShopAPI", "ProductShopAPI\ProductShopAPI.csproj", "{704CE86E-3419-4AB9-8D34-6997401CC3B7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupplierControlPanel", "SupplierControlPanel\SupplierControlPanel.csproj", "{907E1DDF-6D90-47C7-A3B6-2748522973CA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarehousemanControlPanel", "WarehousemanControlPanel\WarehousemanControlPanel.csproj", "{EC3E5290-3BDA-4C06-94B7-7011A9B84DB4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{704CE86E-3419-4AB9-8D34-6997401CC3B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{704CE86E-3419-4AB9-8D34-6997401CC3B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{704CE86E-3419-4AB9-8D34-6997401CC3B7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{907E1DDF-6D90-47C7-A3B6-2748522973CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{907E1DDF-6D90-47C7-A3B6-2748522973CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{907E1DDF-6D90-47C7-A3B6-2748522973CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{907E1DDF-6D90-47C7-A3B6-2748522973CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC3E5290-3BDA-4C06-94B7-7011A9B84DB4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC3E5290-3BDA-4C06-94B7-7011A9B84DB4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC3E5290-3BDA-4C06-94B7-7011A9B84DB4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC3E5290-3BDA-4C06-94B7-7011A9B84DB4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

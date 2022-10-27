@@ -1,0 +1,46 @@
+﻿@page "/warehouse"
+
+@using ProductShopLibrary.Products
+@using WarehousemanControlPanel.Services
+
+@inject WarehouseService warehouseService
+
+<table class="table">
+	<thead>
+		<tr>
+			<th>Наименование</th>
+			<th>Остаток</th>
+		</tr>
+	</thead>
+	<tbody>
+		@if (warehouseService.EndingProducts != null && warehouseService.EndingProducts.Any())
+		{
+			foreach (Product product in warehouseService.EndingProducts)
+			{
+				<tr>
+					<td>@product.Name</td>
+					<td>@product.QuantityInStock</td>
+				</tr>
+			}
+		}
+		else
+		{
+			<h2>Склад полон!</h2>
+		}
+	</tbody>
+</table>
+
+@code
+{
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+
+		warehouseService.OnEndingProductsUpdated += OnEndingProductsUpdated;
+	}
+
+	private void OnEndingProductsUpdated()
+	{
+		InvokeAsync(() => StateHasChanged());
+	}
+}

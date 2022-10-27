@@ -21,5 +21,12 @@ namespace ProductShopAPI.Controllers
         {
             return productsDbContext.Products.ToList();
         }
+
+        [Route("get_ending_products")]
+        [HttpGet]
+        public List<Product> GetEndingProducts(int maximumQuantityInStock)
+        {
+            return productsDbContext.Products.Where(p => p.QuantityInStock <= maximumQuantityInStock).ToList();
+        }
     }
 }

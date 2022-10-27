@@ -1,7 +1,13 @@
+using SupplierControlPanel.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+WarehouseService warehouseService = new WarehouseService();
+warehouseService.StartUpdatingStocks();
+builder.Services.AddSingleton(warehouseService);
 
 var app = builder.Build();
 
