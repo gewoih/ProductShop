@@ -14,14 +14,14 @@
 		</tr>
 	</thead>
 	<tbody>
-		@if (warehouseService.EndingProducts != null && warehouseService.EndingProducts.Any())
+		@if (endingProducts != null && endingProducts.Any())
 		{
-			foreach (Product product in warehouseService.EndingProducts)
+			foreach (Product product in endingProducts)
 			{
 				<tr>
 					<td>@product.Name</td>
 					<td>@product.QuantityInStock</td>
-					<td><input type="number" width="200" min="0" max="1000" @onchange="(eventArgs) => ChangeProductsToSupply(product, eventArgs)"/></td>
+					<td><input type="number" width="200" min="0" max="1000" @onchange="(eventArgs) => ChangeProductsToSupply(product.Id, eventArgs)"/></td>
 				</tr>
 			}
 
@@ -36,31 +36,35 @@
 
 @code
 {
-	private Dictionary<Product, int> productsToSupply;
+	private Dictionary<Guid, int> productsToSupply;
+	private List<Product> endingProducts;
 
 	protected override void OnInitialized()
 	{
 		base.OnInitialized();
 
-		productsToSupply = new Dictionary<Product, int>();
+		endingProducts = warehouseService.EndingProducts;
+		productsToSupply = new Dictionary<Guid, int>();
 		warehouseService.OnEndingProductsUpdated += OnEndingProductsUpdated;
 	}
 
 	private void OnEndingProductsUpdated()
 	{
+		endingProducts = warehouseService.EndingProducts;
+
 		InvokeAsync(() => StateHasChanged());
 	}
 
-	private void ChangeProductsToSupply(Product product, ChangeEventArgs changeEventArgs)
+	private void ChangeProductsToSupply(Guid productId, ChangeEventArgs changeEventArgs)
 	{
 		if (changeEventArgs == null)
 			return;
 
-		productsToSupply[product] = Convert.ToInt32(changeEventArgs.Value);
+		productsToSupply[productId] = Convert.ToInt32(changeEventArgs.Value);
 	}
 
 	private async Task SupplyProducts()
 	{
-
+		await warehouseService.CreateSupply(productsToSupply);
 	}
 }
