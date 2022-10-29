@@ -52,7 +52,18 @@
 	{
 		endingProducts = warehouseService.EndingProducts;
 
+		UpdateProductsToSupply();
+
 		InvokeAsync(() => StateHasChanged());
+	}
+
+	private void UpdateProductsToSupply()
+	{
+		foreach (var product in productsToSupply.ToList())
+		{
+			if (endingProducts.FirstOrDefault(p => p.Id == product.Key) == null)
+				productsToSupply.Remove(product.Key);
+		}
 	}
 
 	private void ChangeProductsToSupply(Guid productId, ChangeEventArgs changeEventArgs)
