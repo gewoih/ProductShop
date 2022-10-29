@@ -23,7 +23,10 @@ namespace ProductShopAPI.Controllers
         {
             if (await ValidateProductsStock(purchase.ProductCart.Products))
             {
-                productsDbContext.AttachRange(purchase.ProductCart.Products);
+                foreach (CartProduct product in purchase.ProductCart.Products)
+                {
+                    productsDbContext.Entry(product.Product).State = EntityState.Unchanged;
+                }
 
                 await productsDbContext.Purchases.AddAsync(purchase);
                 await productsDbContext.SaveChangesAsync();
@@ -40,10 +43,7 @@ namespace ProductShopAPI.Controllers
         {
             foreach (CartProduct cartProduct in cartProducts)
             {
-                Product? purchasedProduct = await productsDbContext.Products.FirstOrDefaultAsync(p => p.Id == cartProduct.Product.Id);
-
-                if (purchasedProduct != null)
-                    productsDbContext.Entry(purchasedProduct).State = EntityState.Detached;
+                Product? purchasedProduct = await productsDbContext.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == cartProduct.Product.Id);
 
                 if (purchasedProduct == null || purchasedProduct.QuantityInStock < cartProduct.Quantity)
                     return false;
@@ -60,12 +60,11 @@ namespace ProductShopAPI.Controllers
 
                 if (purchasedProduct != null)
                 {
-                    productsDbContext.Entry(purchasedProduct).State = EntityState.Detached;
+                    await productsDbContext.Entry(purchasedProduct).ReloadAsync();
                     purchasedProduct.QuantityInStock -= cartProduct.Quantity;
                     productsDbContext.Products.Update(purchasedProduct);
                 }
             }
-
             await productsDbContext.SaveChangesAsync();
         }
     }
